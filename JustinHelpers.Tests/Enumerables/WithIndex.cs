@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace JustinsHelpers.Tests
 {
-    [TestFixture]
+    [TestFixture]    
     [ExcludeFromCodeCoverage]
     public class WithIndex
     {
