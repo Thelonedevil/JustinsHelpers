@@ -6,6 +6,7 @@
 trigger:
 - master
 - development
+- Documentation
 
 pool:
   vmImage: 'windows-latest'
@@ -23,3 +24,6 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+- task: DocFxTask@0
+  inputs:
+    solution: 'JustinHelpers/JustinHelpers.csproj'

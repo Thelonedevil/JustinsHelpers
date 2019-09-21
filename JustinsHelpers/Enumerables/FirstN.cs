@@ -7,18 +7,54 @@ namespace JustinsHelpers.Enumerables.FirstN
 {
     public static class Helper
     {
-        public static (TModel First, TModel Second) FirstTwo<TModel>(this IEnumerable<TModel> source, Func<TModel, bool> predicate = null)
+        /// <summary>
+        /// Returns a tuple containsing the first two elements in the sequence, filtered by a predicate.
+        /// </summary>
+        /// <typeparam name="TModel">The Type that the sequence contains.</typeparam>
+        /// <param name="source">The <see cref="IEnumerable{TModel}"> to get the first two elements of.</param>
+        /// <param name="predicate">Predicate</param>
+        /// <returns>A tuple containsing the first 2 elements in the sequence, filtered by a predicate</returns>
+        /// <exception cref="ArgumentException">Thrown when the sequence has less than two elements</exception>
+        /// <seealso cref="FirstTwo{TModel}(IEnumerable{TModel})"/>
+        /// <seealso cref="FirstTwoOrDefault{TModel}(IEnumerable{TModel})"/>
+        /// <seealso cref="FirstTwoOrDefault{TModel}(IEnumerable{TModel}, Func{TModel, bool})"/>
+        public static (TModel First, TModel Second) FirstTwo<TModel>(this IEnumerable<TModel> source, Func<TModel, bool> predicate)
         {
-            var list = source.Where(predicate ?? (_ => true)).ToList();
+            var list = source.Where(predicate).ToList();
             if (list.Count < 2)
             {
                 throw new ArgumentException($"{nameof(source)} needs 2 or more elements", nameof(source));
             }
             return (list[0], list[1]);
         }
-        public static (TModel First, TModel Second) FirstTwoOrDefault<TModel>(this IEnumerable<TModel> source, Func<TModel, bool> predicate = null)
+        /// <summary>
+        /// Returns a tuple containsing the first 2 elements in the sequence.
+        /// </summary>
+        /// <typeparam name="TModel">The Type that the sequence contains</typeparam>
+        /// <param name="source">The Sequence</param>
+        /// <returns>A tuple containsing the first 2 elements in the sequence</returns>
+        /// <exception cref="ArgumentException">Thrown when the sequence has less than two elements</exception>
+        /// <seealso cref="FirstTwo{TModel}(IEnumerable{TModel}, Func{TModel, bool})"/>
+        /// <seealso cref="FirstTwoOrDefault{TModel}(IEnumerable{TModel})"/>
+        /// <seealso cref="FirstTwoOrDefault{TModel}(IEnumerable{TModel}, Func{TModel, bool})"/>
+        public static (TModel First, TModel Second) FirstTwo<TModel>(this IEnumerable<TModel> source)
         {
-            var list = source.Where(predicate ?? (_ => true)).ToList();
+            return source.FirstTwo(_ => true);
+        }
+        /// <summary>
+        /// Returns a tuple containsing the first 2 elements in the sequence, filtered by a predicate.
+        /// Supplies the default value if sequence has less than 2 elements.
+        /// </summary>
+        /// <typeparam name="TModel">The Type that the sequence contains</typeparam>
+        /// <param name="source">The Sequence</param>
+        /// <param name="predicate">Optional predicate</param>
+        /// <returns>A tuple containsing the first 2 elements in the sequence, filtered by a predicate</returns>
+        /// <seealso cref="FirstTwo{TModel}(IEnumerable{TModel})"/>
+        /// <seealso cref="FirstTwo{TModel}(IEnumerable{TModel}, Func{TModel, bool})"/>
+        /// <seealso cref="FirstTwoOrDefault{TModel}(IEnumerable{TModel})"/>
+        public static (TModel First, TModel Second) FirstTwoOrDefault<TModel>(this IEnumerable<TModel> source, Func<TModel, bool> predicate)
+        {
+            var list = source.Where(predicate).ToList();
             if (list.Count == 0)
             {
                 return (default, default);
@@ -28,6 +64,20 @@ namespace JustinsHelpers.Enumerables.FirstN
                 return (list[0], default);
             }
             return (list[0], list[1]);
+        }
+        /// <summary>
+        /// Returns a tuple containsing the first 2 elements in the sequence.
+        /// Supplies the default value if sequence has less than 2 elements.
+        /// </summary>
+        /// <typeparam name="TModel">The Type that the sequence contains</typeparam>
+        /// <param name="source">The Sequence</param>
+        /// <returns>A tuple containsing the first 2 elements in the sequence, optionionally filtered by a predicate</returns>
+        /// <seealso cref="FirstTwo{TModel}(IEnumerable{TModel})"/>
+        /// <seealso cref="FirstTwo{TModel}(IEnumerable{TModel}, Func{TModel, bool})"/>
+        /// <seealso cref="FirstTwoOrDefault{TModel}(IEnumerable{TModel})"/>
+        public static (TModel First, TModel Second) FirstTwoOrDefault<TModel>(this IEnumerable<TModel> source)
+        {
+            return source.FirstTwoOrDefault(_ => true);
         }
         public static (TModel First, TModel Second, TModel Third) FirstThree<TModel>(this IEnumerable<TModel> source, Func<TModel, bool> predicate = null)
         {
