@@ -11,6 +11,7 @@ namespace TestHarness
     {
         static void Main(string[] args)
         {
+            new object().AsEnumerable().ToList();
             var test = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             foreach ((var item, var index) in test.WithIndex())
             {
