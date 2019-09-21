@@ -18,7 +18,7 @@ steps:
   displayName: 'dotnet restore'
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-- script: dotnet test <test-project> --logger trx --collect "Code coverage"
+- script: dotnet test --logger trx --collect "Code coverage"
 - task: PublishTestResults@2
   inputs:
     testRunner: VSTest
