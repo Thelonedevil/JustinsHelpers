@@ -3,6 +3,7 @@ mono: none
 dotnet: 2.2.402
 install:
   - dotnet restore
+  - dotnet tool install coveralls.net --version 1.0.0 --tool-path tools
 script:
   - dotnet build --configuration 'Release'
-  - dotnet test
+  - dotnet test --logger trx --collect "Code coverage"
