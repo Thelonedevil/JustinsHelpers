@@ -4,6 +4,7 @@ using JustinsHelpers.Enumerables.FirstN;
 using JustinsHelpers.Tuples.AsEnumerable;
 using System.Collections.Generic;
 using System.Linq;
+using JustinsHelpers.Maths.Fibonacci;
 
 namespace TestHarness
 {
@@ -11,7 +12,7 @@ namespace TestHarness
     {
         static void Main(string[] args)
         {
-            new object().AsEnumerable().ToList();
+            //new object().AsEnumerable().ToList();
             var test = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             foreach ((var item, var index) in test.WithIndex())
             {
@@ -21,6 +22,7 @@ namespace TestHarness
             Console.WriteLine($"({string.Join(", ", bigTuple.AsEnumerable().WithIndex())})");
             var((first, firstIndex), (second,secondIndex), (third,thirdIndex)) = test.WithIndex().FirstThree(a=>a.Index%2==0);
             Console.WriteLine(test.WithIndex(true).FirstThree(a => a.Index % 2 == 0));
+            Console.WriteLine(string.Join(", ",FibonacciSequence.Get().WithIndex().Take(100)));
             Console.ReadKey(true);
         }
     }
